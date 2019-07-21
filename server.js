@@ -66,7 +66,7 @@ app.post('/api/shorturl/new', (req, res) => {
 app.get('/api/shorturl/:url', (req, res) => {
   const shortUrl = req.params.url;
   Url.findOne({ short: shortUrl }, (err, data) => {
-    if (err) {
+    if (err || !data || !data.original) {
       res.json({ error: 'Original Url not found for ' + shortUrl })
     } else {
       res.redirect(data.original);
